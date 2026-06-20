@@ -1,6 +1,5 @@
 from config.settings import settings
 
-
 def main():
     print("Configuration Loaded Successfully")
 
