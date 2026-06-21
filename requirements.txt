@@ -24,7 +24,7 @@ chromadb==1.0.20
 
 sentence-transformers==5.1.0
 transformers==4.56.1
-torch==2.8.0
+torch==2.9.0
 
 # ==========================
 # Groq
@@ -66,3 +66,7 @@ typing-extensions==4.15.0
 rich==14.1.0
 
 pydantic-settings==2.10.1
+
+langchain-chroma==0.2.6
+
+langchain-text-splitters==0.3.11

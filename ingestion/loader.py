@@ -4,21 +4,16 @@ from typing import List
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyMuPDFLoader
 
+from exceptions.document_exceptions import (
+    DocumentLoadError,
+    InvalidDocumentError,
+)
+from utils.logger import logger
+
 
 class DocumentLoader:
     """
-    Loads a research paper PDF into LangChain Document objects.
-
-    Responsibilities:
-    - Validate the PDF path.
-    - Validate the file type.
-    - Load the PDF using PyMuPDF.
-    - Standardize metadata for downstream components.
-
-    This class does NOT perform:
-    - Chunking
-    - Embedding generation
-    - Vector database operations
+    Loads research paper PDFs into LangChain Documents.
     """
 
     def __init__(self, pdf_path: Path):
@@ -26,72 +21,77 @@ class DocumentLoader:
 
     def _validate_pdf(self) -> None:
         """
-        Validate that the provided path exists and is a PDF.
-
-        Raises:
-            FileNotFoundError:
-                If the PDF does not exist.
-
-            ValueError:
-                If the file is not a PDF.
+        Validate the provided PDF.
         """
 
         if not self.pdf_path.exists():
-            raise FileNotFoundError(
-                f"PDF not found: {self.pdf_path}"
+            raise InvalidDocumentError(
+                f"File does not exist: {self.pdf_path}"
             )
 
         if not self.pdf_path.is_file():
-            raise ValueError(
-                f"Expected a file but received: {self.pdf_path}"
+            raise InvalidDocumentError(
+                f"Expected a file but got: {self.pdf_path}"
             )
 
         if self.pdf_path.suffix.lower() != ".pdf":
-            raise ValueError(
-                f"Unsupported file type '{self.pdf_path.suffix}'. "
-                "Only PDF files are supported."
+            raise InvalidDocumentError(
+                "Only PDF documents are supported."
             )
+
+    def _normalize_metadata(self, metadata: dict) -> dict:
+        """
+        Keep only metadata useful for retrieval and citations.
+        """
+
+        return {
+            "source": str(self.pdf_path.resolve()),
+            "file_name": self.pdf_path.name,
+            "page": metadata.get("page", 0),
+            "total_pages": metadata.get("total_pages"),
+            "title": metadata.get("title"),
+            "author": metadata.get("author"),
+            "subject": metadata.get("subject"),
+        }
 
     def load(self) -> List[Document]:
         """
-        Load the PDF and standardize metadata.
-
-        Returns:
-            List[Document]:
-                One Document object per page.
-
-        Raises:
-            RuntimeError:
-                If PyMuPDF fails to load the document.
+        Load PDF pages as LangChain Documents.
         """
 
         self._validate_pdf()
+
+        logger.info("Loading PDF: %s", self.pdf_path.name)
 
         try:
             loader = PyMuPDFLoader(str(self.pdf_path))
             documents = loader.load()
 
-        except Exception as exc:
-            raise RuntimeError(
-                f"Failed to load PDF: {self.pdf_path}"
-            ) from exc
+            standardized_documents = []
 
-        standardized_documents = []
+            for doc in documents:
 
-        for document in documents:
-
-            metadata = document.metadata.copy()
-
-            metadata["source"] = str(self.pdf_path.resolve())
-            metadata["file_name"] = self.pdf_path.name
-            metadata["page"] = metadata.get("page", 0)
-            metadata["total_pages"] = metadata.get("total_pages")
-
-            standardized_documents.append(
-                Document(
-                    page_content=document.page_content,
-                    metadata=metadata,
+                standardized_documents.append(
+                    Document(
+                        page_content=doc.page_content,
+                        metadata=self._normalize_metadata(doc.metadata),
+                    )
                 )
+
+            logger.info(
+                "Successfully loaded %d pages from %s",
+                len(standardized_documents),
+                self.pdf_path.name,
             )
 
-        return standardized_documents
+            return standardized_documents
+
+        except Exception as exc:
+            logger.exception(
+                "Failed to load document: %s",
+                self.pdf_path.name,
+            )
+
+            raise DocumentLoadError(
+                f"Unable to load PDF '{self.pdf_path.name}'."
+            ) from exc
