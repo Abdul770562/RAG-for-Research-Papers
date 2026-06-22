@@ -71,11 +71,15 @@ class Settings(BaseSettings):
     # LLM
     # ==========================================================
 
-    llm_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "llama-3.3-70b-versatile"
 
     temperature: float = 0.0
 
     max_tokens: int = 2048
+
+    # ==========================================================
+    # ADDITIONAL
+    # ==========================================================
 
     log_level: str = "INFO"
 
