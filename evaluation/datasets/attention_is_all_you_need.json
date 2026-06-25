@@ -1,0 +1,62 @@
+[
+  {
+    "id": "Q001",
+    "question": "What problem does the Transformer architecture aim to solve?",
+    "category": "Definition",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "Q002",
+    "question": "Why do recurrent neural networks limit parallelization during training?",
+    "category": "Background",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "Q003",
+    "question": "Explain the overall architecture of the Transformer model.",
+    "category": "Architecture",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "Q004",
+    "question": "Describe the encoder stack used in the Transformer architecture.",
+    "category": "Architecture",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "Q005",
+    "question": "Describe the decoder stack and explain why masked self-attention is required.",
+    "category": "Architecture",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "Q006",
+    "question": "Explain the Scaled Dot-Product Attention mechanism.",
+    "category": "Attention",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "Q007",
+    "question": "Why is the attention score divided by the square root of dk?",
+    "category": "Attention",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "Q008",
+    "question": "Explain Multi-Head Attention and discuss why it is beneficial.",
+    "category": "Attention",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "Q009",
+    "question": "List the three different ways Multi-Head Attention is used in the Transformer.",
+    "category": "Attention",
+    "difficulty": "Hard"
+  },
+  {
+    "id": "Q010",
+    "question": "What is the purpose of the position-wise feed-forward network in each Transformer layer?",
+    "category": "Architecture",
+    "difficulty": "Medium"
+  }
+]

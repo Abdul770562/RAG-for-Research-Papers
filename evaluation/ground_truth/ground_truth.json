@@ -1,0 +1,42 @@
+[
+    {
+        "id": "Q001",
+        "ground_truth": "The Transformer architecture was proposed to solve sequence transduction tasks such as machine translation without relying on recurrent or convolutional neural networks. Instead, it uses self-attention mechanisms to model global dependencies between input and output sequences, enabling greater parallelization, faster training, and improved translation performance."
+    },
+    {
+        "id": "Q002",
+        "ground_truth": "Recurrent neural networks process tokens sequentially because each hidden state depends on the previous one. This sequential dependency prevents parallel computation across sequence positions during training, making training slower and less efficient, especially for long sequences."
+    },
+    {
+        "id": "Q003",
+        "ground_truth": "The Transformer follows an encoder-decoder architecture. The encoder converts an input sequence into contextual representations using stacked self-attention and feed-forward layers, while the decoder generates the output sequence autoregressively using masked self-attention, encoder-decoder attention, and feed-forward layers. Both encoder and decoder use residual connections and layer normalization."
+    },
+    {
+        "id": "Q004",
+        "ground_truth": "The encoder consists of six identical layers. Each layer contains two sub-layers: a Multi-Head Self-Attention mechanism followed by a position-wise feed-forward network. Residual connections surround each sub-layer, and layer normalization is applied after each residual connection. All sub-layers produce vectors of dimension 512."
+    },
+    {
+        "id": "Q005",
+        "ground_truth": "The decoder consists of six identical layers. Each layer contains masked Multi-Head Self-Attention, encoder-decoder attention, and a position-wise feed-forward network. Masked self-attention prevents each position from attending to future tokens, ensuring that predictions depend only on previously generated outputs and preserving the autoregressive property during training."
+    },
+    {
+        "id": "Q006",
+        "ground_truth": "Scaled Dot-Product Attention computes attention by taking the dot product between queries and keys, dividing the result by the square root of the key dimension (√dk), applying a softmax function to obtain attention weights, and using these weights to compute a weighted sum of the value vectors. The attention function is defined as Attention(Q, K, V) = softmax(QKᵀ/√dk)V."
+    },
+    {
+        "id": "Q007",
+        "ground_truth": "The attention scores are divided by the square root of the key dimension (√dk) to prevent the dot-product values from becoming excessively large when the dimensionality increases. Large values push the softmax function into regions with very small gradients, making optimization difficult. Scaling keeps the gradients stable and improves training."
+    },
+    {
+        "id": "Q008",
+        "ground_truth": "Multi-Head Attention projects queries, keys, and values into multiple learned subspaces and performs attention independently for each head. The outputs from all heads are concatenated and linearly projected to produce the final representation. This allows the model to attend to information from different representation subspaces and capture different relationships simultaneously, improving representation learning compared to single-head attention."
+    },
+    {
+        "id": "Q009",
+        "ground_truth": "The Transformer uses Multi-Head Attention in three ways: first, encoder self-attention where each encoder position attends to every other encoder position; second, encoder-decoder attention where decoder queries attend to encoder outputs; and third, decoder self-attention where each decoder position attends only to previous positions using masking."
+    },
+    {
+        "id": "Q010",
+        "ground_truth": "The position-wise feed-forward network applies two linear transformations with a ReLU activation between them independently to every position in the sequence. It increases the model's capacity to learn complex nonlinear transformations while preserving positional independence. In the base Transformer, the input and output dimensions are 512 and the hidden dimension is 2048."
+    }
+]
