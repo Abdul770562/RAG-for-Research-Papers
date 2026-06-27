@@ -77,6 +77,16 @@ class Settings(BaseSettings):
 
     max_tokens: int = 2048
 
+    # ======================================================
+    # Evaluation
+    # ======================================================
+
+    evaluation_model: str = "openai/gpt-oss-120b"
+
+    evaluation_temperature: float = 0.0
+
+    evaluation_max_tokens: int = 16384
+
     # ==========================================================
     # ADDITIONAL
     # ==========================================================
