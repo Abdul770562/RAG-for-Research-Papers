@@ -4,8 +4,11 @@ evaluation/evaluator_llm.py
 Creates the modern InstructorLLM evaluator used natively by RAGAS collections.
 Routes custom open-source models through the Groq hardware acceleration cloud gateway.
 """
+from langchain_huggingface import HuggingFaceEmbeddings
 
+from ragas.embeddings import HuggingFaceEmbeddings
 from ragas.llms import llm_factory
+
 from config.settings import settings
 from utils.logger import logger
 
@@ -41,9 +44,22 @@ class EvaluatorLLM:
             client=native_client
         )
 
+        logger.info("Loading local HuggingFace Embedding: sentence-transformers/all-MiniLM-L6-v2...")
+
+        self._embeddings = HuggingFaceEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2"
+        )
+        
+        logger.info("Native Ragas embedding engine initialized successfully.")
+
     @property
     def llm(self):
         """
         Return the native Ragas InstructorLLM engine.
         """
         return self._llm
+
+    @property
+    def embeddings(self):
+        """Return the native Ragas Embedding engine."""
+        return self._embeddings

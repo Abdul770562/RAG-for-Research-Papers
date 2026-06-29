@@ -74,3 +74,7 @@ langchain-text-splitters==0.3.11
 streamlit
 
 ragas
+
+langchain-huggingface 
+
+sentence-transformers

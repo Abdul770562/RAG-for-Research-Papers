@@ -85,7 +85,7 @@ class Settings(BaseSettings):
 
     evaluation_temperature: float = 0.0
 
-    evaluation_max_tokens: int = 16384
+    evaluation_max_tokens: int = 32768
 
     # ==========================================================
     # ADDITIONAL

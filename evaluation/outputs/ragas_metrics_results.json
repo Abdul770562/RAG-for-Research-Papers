@@ -45,7 +45,9 @@
             "context_precision": 0.19999999998,
             "context_utilization": 0.19999999998,
             "context_recall": 1.0,
-            "faithfulness": 1.0
+            "faithfulness": 1.0,
+            "answer_relevancy": 0.9509654819157407,
+            "noise_sensitivity": 1.0
         }
     }
 ]
