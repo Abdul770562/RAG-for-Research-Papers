@@ -100,7 +100,7 @@ class VectorStoreManager:
 
         return self.vector_store.as_retriever(
             search_kwargs={
-                "k": settings.top_k
+                "k": settings.retrieval_top_k
             }
         )
 

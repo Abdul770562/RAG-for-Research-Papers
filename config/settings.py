@@ -81,11 +81,11 @@ class Settings(BaseSettings):
     # Evaluation
     # ======================================================
 
-    evaluation_model: str = "openai/gpt-oss-120b"
+    evaluation_model: str = "llama-3.1-8b-instant"
 
     evaluation_temperature: float = 0.0
 
-    evaluation_max_tokens: int = 32768
+    evaluation_max_tokens: int = 128000
 
     # ==========================================================
     # ADDITIONAL
@@ -100,6 +100,17 @@ class Settings(BaseSettings):
     chunk_overlap: int = 200
 
     min_chunk_length: int = 100
+
+
+    # ==========================================================
+    # RERANKER
+    # ==========================================================
+
+    reranker_model: str = "BAAI/bge-reranker-base"
+
+    retrieval_top_k: int = 20
+
+    final_top_k: int = 5
 
 
 settings = Settings()
